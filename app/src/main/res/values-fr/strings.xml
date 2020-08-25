@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="app_name">Mots du patrimoine</string>
+    <string name="share_the_question_with_friends">Demande à un ami</string>
+    <string name="share_question_text">partager</string>
+    <string name="share_title_hint">Ajouter un titre</string>
+    <string name="the_right_answer_is">La réponse est</string>
+    <string name="back_text">Arrière</string>
+    <string name="permission_title">Clarification</string>
+    <string name="permission_explanation">L\'application doit obtenir une autorisation d\'écriture sur le stockage externe pour stocker l\'image en vue de son partage par d\'autres applications</string>
+    <string name="permission_denied">L\'opération n\'a pas été exécutée car les autorisations nécessaires n\'ont pas été accordées</string>
+    <string name="change_lang_text">changement de langue</string>
+
+    <string-array name="answers">
+        <item>العقال</item>
+        <item>الفروة</item>
+        <item>السدو</item>
+        <item>الحناء</item>
+        <item>الدلة</item>
+        <item>الخف</item>
+        <item>الخنجر</item>
+        <item>النمرقة</item>
+        <item>القنديل / السراج</item>
+        <item>الفانوس</item>
+        <item>الطربوش</item>
+        <item>العمامة</item>
+        <item>الدشداشة</item>
+    </string-array>
+
+    <string-array name="answer_description">
+        <item>Eiqal: Il est placé sur le chapeau / ghutra pour le réparer</item>
+        <item>Manteau: doublé de laine, il se porte en hiver pour se protéger du froid</item>
+        <item>Sadu: l\'un des types de tissage bédouin traditionnel</item>
+        <item>Henné: Il est utilisé pour teindre les cheveux et la barbe, et il est également utilisé pour embellir les mains des femmes</item>
+        <item>Dallah: Le bol utilisé pour servir le café par les Arabes</item>
+        <item>Chaussons épais: Fait de cuir, il se porte aux pieds, il était ancien par les Arabes</item>
+        <item>Dagger: Une petite arme blanche qui est placée sur la taille</item>
+        <item>Alnamriqa: un petit oreiller sur lequel s\'appuyer</item>
+        <item>Qandil: Le nom de l\'outil utilisé pour l\'éclairage dans le passé</item>
+        <item>Lanterne: un outil utilisé pour l\'éclairage et les décorations</item>
+        <item>Fès: le chapeau rouge était célèbre au Levant, en Egypte et au Maroc</item>
+        <item>Turban: Casquette</item>
+        <item>Dishdasha: robe arabe largement portée dans les pays du Golfe</item>
+    </string-array>
+
+</resources>
