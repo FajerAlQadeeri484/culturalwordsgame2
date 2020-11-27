@@ -11,31 +11,40 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+
 public class Share extends AppCompatActivity {
 
     private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
-    public EditText edit_text_share_title;
-    ImageView image_view_question;
+    protected EditText edit_text_share_title;
+    private ImageView image_view_question;
+    private int res_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
-        image_view_question = findViewById(R.id.image_view_question);
+        image_view_question = findViewById(R.id.image_view_questionS);
         edit_text_share_title = findViewById(R.id.edit_text_share_title);
         SharedPreferences sharedPreferences = getSharedPreferences("app_pref", MODE_PRIVATE);
         String questionTitle = sharedPreferences.getString("share_title","");
         edit_text_share_title.setText(questionTitle);
         Bundle bundle = getIntent().getExtras();
         if (bundle!=null){
-            int res_image = bundle.getInt("theImage");
+            res_image = bundle.getInt("theImage");
             image_view_question.setImageResource(res_image);
         }
     }
@@ -50,11 +59,17 @@ public class Share extends AppCompatActivity {
     private void shareImage() {
         // كود مشاركة الصورة هنا
         String questionTitle = edit_text_share_title.getText().toString();
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT,questionTitle + "\n" + image_view_question);
-        shareIntent.setType("text/plain");
-        startActivity(shareIntent);
+        Bitmap b = BitmapFactory.decodeResource(getResources(),res_image);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(),
+                b, "Title", null);
+        Uri imageUri =  Uri.parse(path);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.putExtra(Intent.EXTRA_TEXT,questionTitle);
+        startActivity(Intent.createChooser(shareIntent, "Select"));
 
         SharedPreferences sharedPreferences = getSharedPreferences("app_pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

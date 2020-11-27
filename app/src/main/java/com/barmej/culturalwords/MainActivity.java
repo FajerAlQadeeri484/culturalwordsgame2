@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +26,10 @@ import java.lang.reflect.Array;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String BUNDLE_CURRENT_IMAGE = "BUNDLE_CURRENT_IMAGE";
+    private static final String BUNDLE_CURRENT_DESCRIPTION = "BUNDLE_CURRENT_DESCRIPTION";
 
     private ImageView image_view_question;
     private ImageView button_change_language;
@@ -107,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
 
                         saveLanguage(language);
                         LocaleHelper.setLocale(MainActivity.this, language);
-//                        recreate();
-                        Intent i = new Intent(getApplicationContext(),
+                        recreate();
+                        /*Intent i = new Intent(getApplicationContext(),
                                 MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+                        startActivity(i);*/
                     }
                 }).create();
         alertDialog.show();
@@ -147,5 +153,24 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(MainActivity.this,Share.class);
         i.putExtra("theImage",mCurrentImages);
         startActivity(i);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(BUNDLE_CURRENT_IMAGE,mCurrentImages);
+        outState.putString(BUNDLE_CURRENT_DESCRIPTION,mCurrentAnswerDescription);
+        Log.i(TAG,"OnSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null){
+            mCurrentImages = savedInstanceState.getInt(BUNDLE_CURRENT_IMAGE);
+            image_view_question.setImageDrawable(ContextCompat.getDrawable(this,mCurrentImages));
+            mCurrentAnswerDescription = savedInstanceState.getString(BUNDLE_CURRENT_DESCRIPTION);
+        }
+        Log.i(TAG,"OnRestoreInstanceState");
     }
 }

@@ -47,7 +47,7 @@
             android:textColor="@color/brownDark" />
 
         <ImageView
-            android:id="@+id/image_view_question"
+            android:id="@+id/image_view_questionS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
