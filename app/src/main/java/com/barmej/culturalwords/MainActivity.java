@@ -28,8 +28,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String BUNDLE_CURRENT_IMAGE = "BUNDLE_CURRENT_IMAGE";
-    private static final String BUNDLE_CURRENT_DESCRIPTION = "BUNDLE_CURRENT_DESCRIPTION";
+    private static final String BUNDLE_CURRENT_INDEX = "BUNDLE_CURRENT_INDEX";
 
     private ImageView image_view_question;
     private ImageView button_change_language;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] answerDescription;
     private int mCurrentImages;
     private String mCurrentAnswerDescription;
-    private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
+    private int mCurrentIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         mCurrentImages = images[randomImageIndex];
         mCurrentAnswerDescription = answerDescription[randomImageIndex];
         image_view_question.setImageDrawable(ContextCompat.getDrawable(this,mCurrentImages));
+        mCurrentIndex = randomImageIndex;
     }
 
     public void onChangeImageClicked(View view){
@@ -158,8 +158,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(BUNDLE_CURRENT_IMAGE,mCurrentImages);
-        outState.putString(BUNDLE_CURRENT_DESCRIPTION,mCurrentAnswerDescription);
+        outState.putInt(BUNDLE_CURRENT_INDEX,mCurrentIndex);
         Log.i(TAG,"OnSaveInstanceState");
     }
 
@@ -167,9 +166,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null){
-            mCurrentImages = savedInstanceState.getInt(BUNDLE_CURRENT_IMAGE);
+            mCurrentIndex = savedInstanceState.getInt(BUNDLE_CURRENT_INDEX);
+            mCurrentImages = images[mCurrentIndex];
             image_view_question.setImageDrawable(ContextCompat.getDrawable(this,mCurrentImages));
-            mCurrentAnswerDescription = savedInstanceState.getString(BUNDLE_CURRENT_DESCRIPTION);
+            mCurrentAnswerDescription = answerDescription[mCurrentIndex];
         }
         Log.i(TAG,"OnRestoreInstanceState");
     }
